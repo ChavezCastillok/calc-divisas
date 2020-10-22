@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calc-cambio</title>
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Liberation Sans';
+        }
+        header {
+            text-align: center;
+        }
+
+        footer {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            font-size: small;
+        }
+
+        #caca {
+            display: flex;
+        }
+
+        @media screen and (max-width: 520px){
+            #caca {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Calculadora de cambio monetario</h1>
+        <h2>Venezuela</h2>
+    </header>
+    <main>
+            <form id="caca" action="" method="get">
+                <fieldset>
+                    <legend>Equivalencias</legend>
+                    <p><input type="text" id="usd" placeholder="0.00"> USD</p>
+                    <p><input type="text" id="cop" placeholder="0.00"> COP</p>
+                    <p><input type="text" id="ves" placeholder="0.00"> VES</p>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Referencias</legend>
+                    <p><input type="text" value="1.00" readonly> USD</p>
+                    <p>Tasas de cambio</p>
+                    <p><input type="text" id="USDCOP" value="3400.00"> COP</p>
+                    <p><input type="text" id="USDVES" value="462000.00"> VES</p>
+                    <p><input type="text" id="VESCOP" readonly> VES en COP</p>
+                </fieldset>
+
+
+            </form>
+    </main>
+    <footer>
+        <p>Realizado por <a href="http://twitter.com/chavezcastillok">@ChavezCastillok</a></p>
+        <p>octubre de 2020</p>
+    </footer>
+
+    <script>
+
+        var tasa_USDCOP = document.getElementById('USDCOP')
+        var tasa_USDVES = document.getElementById('USDVES')
+        var tasa_VESCOP = document.getElementById('VESCOP')
+
+        var montoUSD = document.getElementById('usd')
+        var montoCOP = document.getElementById('cop')
+        var montoVES = document.getElementById('ves')
+
+        tasa_VESCOP.value = tasa_USDCOP.value / tasa_USDVES.value
+
+        montoUSD.addEventListener('keyup', function () {
+            let usd = parseFloat(montoUSD.value)
+            montoCOP.value = usd * tasa_USDCOP.value
+            montoVES.value = usd * tasa_USDVES.value
+        })
+
+        montoCOP.addEventListener('keyup', function () {
+            let pesos = parseFloat(montoCOP.value)
+            montoUSD.value = pesos / tasa_USDCOP.value
+            montoVES.value = montoUSD.value * tasa_USDVES.value
+        })
+
+        montoVES.addEventListener('keyup', function () {
+            let bolivares = parseFloat(montoVES.value)
+            montoUSD.value = bolivares / tasa_USDVES.value
+            montoCOP.value = montoUSD.value * tasa_USDCOP.value
+        })
+
+        tasa_USDCOP.addEventListener('keyup', function () {
+            tasa_VESCOP.value = tasa_USDCOP.value / tasa_USDVES.value
+        })
+        tasa_USDVES.addEventListener('keyup', function () {
+            tasa_VESCOP.value = tasa_USDCOP.value / tasa_USDVES.value
+        })
+
+    </script>
+</body>
+
+</html>
