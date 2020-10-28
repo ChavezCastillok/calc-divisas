@@ -9,11 +9,13 @@
     <style>
         body {
             display: flex;
+            background-color: ghostwhite;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             font-family: 'Liberation Sans';
         }
+
         header {
             text-align: center;
         }
@@ -25,11 +27,15 @@
             font-size: small;
         }
 
+        a {
+            color: violet;
+        }
+
         #caca {
             display: flex;
         }
 
-        @media screen and (max-width: 520px){
+        @media screen and (max-width: 520px) {
             #caca {
                 flex-direction: column;
             }
@@ -39,29 +45,31 @@
 
 <body>
     <header>
-        <h1>Calculadora de cambio monetario</h1>
+        <h1>Calculadora de divisas</h1>
+        <h4>Dolares, pesos colombianos y bolivares soberanos</h4>
         <h2>Venezuela</h2>
     </header>
     <main>
-            <form id="caca" action="" method="get">
-                <fieldset>
-                    <legend>Equivalencias</legend>
-                    <p><input type="text" id="usd" placeholder="0.00"> USD</p>
-                    <p><input type="text" id="cop" placeholder="0.00"> COP</p>
-                    <p><input type="text" id="ves" placeholder="0.00"> VES</p>
-                </fieldset>
+        <form id="caca" action="" method="get">
+            <fieldset>
+                <legend>Equivalencias</legend>
+                <p><input type="text" id="usd" placeholder="0.00"> USD</p>
+                <p><input type="text" id="cop" placeholder="0.00"> COP</p>
+                <p><input type="text" id="ves" placeholder="0.00"> VES</p>
+            </fieldset>
 
-                <fieldset>
-                    <legend>Referencias</legend>
-                    <p><input type="text" value="1.00" readonly> USD</p>
-                    <p>Tasas de cambio</p>
-                    <p><input type="text" id="USDCOP" value="3400.00"> COP</p>
-                    <p><input type="text" id="USDVES" value="462000.00"> VES</p>
-                    <p><input type="text" id="VESCOP" readonly> VES en COP</p>
-                </fieldset>
+            <fieldset>
+                <legend>Referencias</legend>
+                <p><input type="text" value="1.00" readonly> USD</p>
+                <h5>Tasas de cambio</h5>
+                <p><input type="text" id="USDCOP"> COP</p>
+                <p><input type="text" id="USDVES"> VES</p>
+                <h5>1 VES en COP</h5>
+                <p><input type="text" id="VESCOP" readonly></p>
+            </fieldset>
 
 
-            </form>
+        </form>
     </main>
     <footer>
         <p>Realizado por <a href="http://twitter.com/chavezcastillok">@ChavezCastillok</a></p>
@@ -78,31 +86,38 @@
         var montoCOP = document.getElementById('cop')
         var montoVES = document.getElementById('ves')
 
+        localStorage.tasaUC = localStorage.tasaUC || '3400'
+        localStorage.tasaUV = localStorage.tasaUV || '475000'
+
+        tasa_USDCOP.value = parseFloat(localStorage.tasaUC)
+        tasa_USDVES.value = parseFloat(localStorage.tasaUV)
         tasa_VESCOP.value = tasa_USDCOP.value / tasa_USDVES.value
 
         montoUSD.addEventListener('keyup', function () {
             let usd = parseFloat(montoUSD.value)
-            montoCOP.value = usd * tasa_USDCOP.value
-            montoVES.value = usd * tasa_USDVES.value
+            montoCOP.value = usd * parseFloat(localStorage.tasaUC)
+            montoVES.value = usd * parseFloat(localStorage.tasaUV)
         })
 
         montoCOP.addEventListener('keyup', function () {
             let pesos = parseFloat(montoCOP.value)
-            montoUSD.value = pesos / tasa_USDCOP.value
-            montoVES.value = montoUSD.value * tasa_USDVES.value
+            montoUSD.value = pesos / parseFloat(localStorage.tasaUC)
+            montoVES.value = montoUSD.value * parseFloat(localStorage.tasaUV)
         })
 
         montoVES.addEventListener('keyup', function () {
             let bolivares = parseFloat(montoVES.value)
-            montoUSD.value = bolivares / tasa_USDVES.value
-            montoCOP.value = montoUSD.value * tasa_USDCOP.value
+            montoUSD.value = bolivares / parseFloat(localStorage.tasaUV)
+            montoCOP.value = montoUSD.value * parseFloat(localStorage.tasaUC)
         })
 
         tasa_USDCOP.addEventListener('keyup', function () {
-            tasa_VESCOP.value = tasa_USDCOP.value / tasa_USDVES.value
+            localStorage.tasaUC = tasa_USDCOP.value
+            tasa_VESCOP.value = parseFloat(localStorage.tasaUC) / parseFloat(localStorage.tasaUV)
         })
         tasa_USDVES.addEventListener('keyup', function () {
-            tasa_VESCOP.value = tasa_USDCOP.value / tasa_USDVES.value
+            localStorage.tasaUV = tasa_USDVES.value
+            tasa_VESCOP.value = parseFloat(localStorage.tasaUC) / parseFloat(localStorage.tasaUV)
         })
 
     </script>
