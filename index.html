@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es-ve">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calc-cambio</title>
+    <title>Calc-divisas</title>
 
     <style>
         body {
-            display: flex;
+            margin: 0;
             background-color: ghostwhite;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             font-family: 'Liberation Sans';
         }
 
@@ -20,19 +17,49 @@
             text-align: center;
         }
 
+        main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
         footer {
             display: flex;
             flex-direction: column;
             align-items: flex-end;
             font-size: small;
+            padding-right: 1rem;
         }
 
         a {
             color: violet;
+            text-decoration: none;
         }
 
         #caca {
             display: flex;
+        }
+
+        #nav-top {
+            display: block;
+            background-color: darkviolet;
+            font-family: 'Rubik';
+        }
+
+        #nav-top ul {
+            margin: 0;
+            padding: .5rem;
+
+            display: flex;
+            justify-content: space-around;
+            align-items: baseline;
+
+            list-style: none;
+        }
+
+        #nav-top li {
+            padding-right: 2rem;
         }
 
         @media screen and (max-width: 520px) {
@@ -40,13 +67,37 @@
                 flex-direction: column;
             }
         }
+
+        @media (orientation: portrait) {
+            #nav-top {
+                text-align: center;
+            }
+
+            #nav-top ul {
+                display: block;
+            }
+
+            #nav-top ul>ul {
+                display: flex;
+                justify-content: space-evenly;
+            }
+        }
     </style>
 </head>
 
 <body>
+    <nav id="nav-top">
+        <ul>
+            <li><a href="https://chavezcastillok.github.io">Chavez Castillo k</a></li>
+            <li>/ Calc-divisas</li>
+            <ul>
+                <li><a href="https://github.com/ChavezCastillok">@GitHub</a></li>
+                <li><a href="https://twitter.com/chavezcastillok">@Twitter</a></li>
+            </ul>
+        </ul>
+    </nav>
     <header>
         <h1>Calculadora de divisas</h1>
-        <h4>Dolares, pesos colombianos y bolivares soberanos</h4>
         <h2>Venezuela</h2>
     </header>
     <main>
@@ -67,13 +118,15 @@
                 <h5>1 VES en COP</h5>
                 <p><input type="text" id="VESCOP" readonly></p>
             </fieldset>
-
-
         </form>
+        <ul>
+                <li>USD: Dolar de Estados Unidos.</li>
+                <li>COP: Peso de Colombia.</li>
+                <li>VES: Bolivar Soberano de Venezuela.</li>
+            </ul>
     </main>
     <footer>
-        <p>Realizado por <a href="http://twitter.com/chavezcastillok">@ChavezCastillok</a></p>
-        <p>octubre de 2020</p>
+        <p>Fin.</p>
     </footer>
 
     <script>
